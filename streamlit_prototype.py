@@ -24,7 +24,7 @@ st.write("")
 
 # testing
 
-client = MongoClient("mongodb+srv://segmentUser:e1FFaVUrB1gSiSY0@mongotest.dwu69.mongodb.net/?appName=MongoTest")
+client = MongoClient(uri)
 db = client["ManateeSegments"]
 telemetry = db["TelemetryCollection"]
 tlmData = telemetry.find()
