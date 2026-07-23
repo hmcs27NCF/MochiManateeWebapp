@@ -9,8 +9,7 @@ subprocess.run(["node", "mongodb_prototype.js"], check=True)
 
 print("Reached point A")
 
-#uri = st.secrets["MONGODB_URI"]
-uri = "mongodb+srv://segmentUser:e1FFaVUrB1gSiSY0@mongotest.dwu69.mongodb.net/?appName=MongoTest"
+uri = st.secrets["MONGODB_URI"]
 
 client = MongoClient(uri)
 
