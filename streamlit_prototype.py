@@ -3,9 +3,9 @@ from collections import defaultdict
 import Utilities
 import streamlit as st
 import pandas as pd
-import subprocess
+#import subprocess
 
-subprocess.run(["node", "mongodb_prototype.js"], check=True)
+#subprocess.run(["node", "mongodb_prototype.js"], check=True)
 
 print("Reached point A")
 
