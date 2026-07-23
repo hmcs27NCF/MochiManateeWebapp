@@ -6,6 +6,7 @@ import pandas as pd
 
 print("Reached point A")
 
+#uri = st.secrets["MONGODB_URI"]
 uri = "mongodb+srv://segmentUser:e1FFaVUrB1gSiSY0@mongotest.dwu69.mongodb.net/?appName=MongoTest"
 
 client = MongoClient(uri)
