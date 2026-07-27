@@ -241,7 +241,7 @@ simName = session["Simulation"]
 st.write("Segment:", simName)
 st.write("")
 
-sceneTimes = session.filter(regex="Reading time \\(ms\\)|Viewing time \\(ms\\)")
+sceneTimes = session.filter(regex="Reading time \\(ms\\)")
 sceneTimes = sceneTimes.rename_axis("Scene").reset_index(name="Time (ms)")
 
 st.bar_chart(sceneTimes, x="Scene", y="Time (ms)", height=480)
