@@ -208,7 +208,7 @@ summary_df = pd.DataFrame(summary_rows)
 csv = summary_df.to_csv(index=False).encode("utf-8")
 
 st.download_button(
-    label="📥 Download CSV",
+    label="Download CSV",
     data=csv,
     file_name="mongodb_export.csv",
     mime="text/csv",
