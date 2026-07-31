@@ -51,90 +51,6 @@ telemetry = db["TelemetryCollection"]
 
 tlmData = telemetry.find()
 
-# Initialize a Dictionary of Lists instead of a List of Dictionaries (doing the opposite will cause the script to crash)
-simDict = {
-    "Description": [],
-    "Event Name": [],
-    "Session Number": [],
-    "Simulation": [],
-    "Timestamp": [],
-    "Session ID": []
-}
-
-idList = []
-sessionNumber = 0
-
-for doc in tlmData:
-    
-    # Safely get sessionId, default to 'Unknown' if missing
-    current_session_id = str(doc.get("sessionId", "Unknown"))
-    
-    # Increment session number if current sessionId is not in idList
-    if current_session_id not in idList:
-        idList.append(current_session_id)
-        sessionNumber += 1
-    
-    # Safely get the event name
-    event_name = doc.get("name", "UnknownEvent")
-    
-    # Player looks at an object
-    if event_name == "lookingAt":
-        objectText = doc.get("target", "Unknown Target")
-        timeTaken = doc.get("intContent", 1000) / 1000
-        description = f"Player looked at [ {objectText} ] for {timeTaken} seconds."
-        
-    # Player completes a tutorial task
-    elif event_name == "tutorialTaskCompleted":
-        objectText = doc.get("textContent", "Unknown Task")
-        description = f"Player completed the tutorial task [ {objectText} ]  "
-        
-    # Player completes a scene
-    elif event_name == "sceneCompleted":
-        objectText = doc.get("textContent", "Unknown Scene")
-        description = f"Player completed the scene [ {objectText} ].  "
-        
-    # Player breathed air
-    elif event_name == "playerBreathe":
-        description = "Player breathed air."
-        
-    # Player boat hit
-    elif event_name == "playerHit":
-        description = "Player was hit by a boat."
-        
-    # Player ate seagrass
-    elif event_name == "seagrassEaten":
-        description = "Player ate seagrass."
-        
-    # Multiplayer manatee huddle
-    elif event_name == "huddleEnd":
-        description = "Player huddled with other manatees."
-    
-    # Player chooses a name
-    elif event_name == "manateeNameSelected":
-        nameSelected = doc.get("textContent", "Unknown Name")
-        description = f"Player selected the name [ {nameSelected} ] for their manatee."
-        
-    # Player touches a manatee
-    elif event_name == "manateeInteraction":
-        description = "Player interacted with a manatee."
-        
-    # Placeholder in case we don't have a description
-    else:
-        description = "PLACEHOLDER TEXT"
-    
-    # Appending info directly to the Dictionary of Lists
-    simDict["Description"].append(description)
-    simDict["Event Name"].append(event_name)
-    simDict["Session Number"].append(sessionNumber)
-    simDict["Simulation"].append(str(doc.get("segmentChosen", "Unknown")))
-    simDict["Timestamp"].append(str(doc.get("timestamp", "No Timestamp")))
-    simDict["Session ID"].append(current_session_id)
-    
-print("Creating DataFrame...")
-manateeFrame = pd.DataFrame(simDict)
-print("Created DataFrame")
-
-
 # - - - - - - - - - - - - - - - - - - - - - - -
 # Building a Sessions Table with Utilities.py
 # - - - - - - - - - - - - - - - - - - - - - - -
@@ -242,11 +158,3 @@ sceneTimes = session.filter(regex="Reading time \\(ms\\)")
 sceneTimes = sceneTimes.rename_axis("Scene").reset_index(name="Time (ms)")
 
 st.bar_chart(sceneTimes, x="Scene", y="Time (ms)", height=480)
-
-# Displaying the first table after the Sessions table and bar chart.
-st.write("")
-st.subheader("All Data")
-st.write("")
-
-manateeFrame = pd.DataFrame(simDict)
-st.dataframe(manateeFrame)
