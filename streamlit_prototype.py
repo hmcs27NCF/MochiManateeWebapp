@@ -146,16 +146,17 @@ simName = session["Simulation"]
 st.write("Segment:", simName)
 st.write("")
 
-# Scene completion times
+# Chart for scene completion times
+st.subheader("Scene Completion Times")
+
 scene_times = session.filter(regex="Total time \\(ms\\)")
+scene_df = scene_times.rename_axis("Scene").reset_index(name="Time (ms)")
 
-# Slide reading times
-reading_times = session.filter(regex="Reading time \\(ms\\)")
+st.bar_chart(scene_df, x="Scene", y="Time (ms)")
 
-# Combine both into one Series
-combined = pd.concat([scene_times, reading_times])
+# Second bar chart, displays only data that contains "Reading time (ms)"
+readingTimes = session.filter(regex="Reading time \\(ms\\)")
+readingTimes = readingTimes.rename_axis("Slide").reset_index(name="Time (ms)")
 
-# Convert to DataFrame for Streamlit
-chart_df = combined.rename_axis("Category").reset_index(name="Time (ms)")
+st.bar_chart(readingTimes, x="Slide", y="Time (ms)", height=480)
 
-st.bar_chart(chart_df, x="Category", y="Time (ms)", height=480)
