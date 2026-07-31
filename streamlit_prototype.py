@@ -44,13 +44,6 @@ st.write("")
 db = client["ManateeSegments"]
 telemetry = db["TelemetryCollection"]
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Transcribing the Data
-# - - - - - - - - - - - - - - - - - - - - - - - -
-
-tlmData = telemetry.find()
-
 # - - - - - - - - - - - - - - - - - - - - - - -
 # Building a Sessions Table with Utilities.py
 # - - - - - - - - - - - - - - - - - - - - - - -
