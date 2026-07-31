@@ -147,16 +147,18 @@ st.write("Segment:", simName)
 st.write("")
 
 # Chart for scene completion times
-st.subheader("Scene Completion Times")
+st.write("Scene Completion Times")
 
 scene_times = session.filter(regex="Total time \\(ms\\)")
 scene_df = scene_times.rename_axis("Scene").reset_index(name="Time (ms)")
 
-st.bar_chart(scene_df, x="Scene", y="Time (ms)")
+st.bar_chart(scene_df, x="Scene", y="Time (ms)", height=400)
+st.write("")
 
 # Second bar chart, displays only data that contains "Reading time (ms)"
+st.write("Slide Reading Times")
 readingTimes = session.filter(regex="Reading time \\(ms\\)")
 readingTimes = readingTimes.rename_axis("Slide").reset_index(name="Time (ms)")
 
-st.bar_chart(readingTimes, x="Slide", y="Time (ms)", height=480)
+st.bar_chart(readingTimes, x="Slide", y="Time (ms)", height=400)
 
